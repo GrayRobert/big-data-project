@@ -19,5 +19,5 @@ Project scope is to source a large dataset and programatically process it in a b
 2. Creates table to store songdata in hbase
 3. Imports data into hbase table
 4. Creates table to store summarised data in hbase
-5. Runs MapReduce on source data producing a summary couny of words used in song lyrics and stores data in hbase summary table
+5. Runs MapReduce on source data producing a summary count of words used in the 51,000 song lyrics and stores the summary data in a hbase table
 6. Copys the summary table data to a more suitable SQL Lite database for further processing and analysis
