@@ -5,8 +5,8 @@ import org.apache.hadoop.conf.Configuration;
 public class Constants {
 
     //Don't think i needed these -- For connecting to Kaggle API
-    public static final String KAGGLE_USERNAME = "grayrobert";
-    public static final String KAGGLE_PASSWORD = "Remember2018!";
+    public static final String KAGGLE_USERNAME = "username";
+    public static final String KAGGLE_PASSWORD = "password";
 
     //Direct download url for data csv file
     public static final String CSV_FILE = "/Users/robertgray/sandbox/bigdataproject/src/main/resources/temp/data/songdata.csv";
