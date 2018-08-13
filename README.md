@@ -13,6 +13,8 @@ Project scope is to source a large dataset and programatically process it in a b
 2. Update the Constants.java file appropriately
 3. Run the job with mvn exec:java
 
+Note: Main.java executes each of the jobs and is a good starting point when reviewing the code.
+
 ### Presuming hadoop and hbase are setup correctly the job does the following tasks
 
 1. Stores songdata.csv file in hdfs
