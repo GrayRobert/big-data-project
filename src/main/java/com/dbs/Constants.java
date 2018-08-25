@@ -8,12 +8,12 @@ public class Constants {
     public static final String KAGGLE_USERNAME = "username";
     public static final String KAGGLE_PASSWORD = "password";
 
-    //Direct download url for data csv file
-    public static final String CSV_FILE = "/Users/robertgray/sandbox/bigdataproject/src/main/resources/temp/data/songdata.csv";
+    //CSV file
+    public static final String CSV_FILE = "/Users/robertgray/sandbox/big-data-project/src/main/resources/temp/data/lyrics.csv";
 
     //Temp directory for store data in HDFS
     public static final String TEMP_DATA_DIRECTORY = "/bigdataproject/data";
-    public static final String TEMP_FILE_NAME = "songdata.csv";
+    public static final String TEMP_FILE_NAME = "lyrics.csv";
     public static final String TEMP_CSV_FILE = TEMP_DATA_DIRECTORY + "/" + TEMP_FILE_NAME;
 
     //HDFS Configuration Settings
@@ -25,5 +25,5 @@ public class Constants {
     public static final String HBASE_SUMMARY_TABLE_NAME = "songdata_summary";
 
     //SQL Lite Setings
-    public static final String SQL_LITE_DATABASE = "/Users/robertgray/sandbox/bigdataproject/src/main/resources/temp/data/summary.db";
+    public static final String SQL_LITE_DATABASE = "/Users/robertgray/sandbox/big-data-project/src/main/resources/temp/data/summary.db";
 }

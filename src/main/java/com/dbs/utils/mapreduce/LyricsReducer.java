@@ -29,7 +29,7 @@ public class LyricsReducer extends
             }
         }
 
-        System.out.println("THe key is " + keyString + " and the value is " + sum);
+        System.out.println("The key is " + keyString + " and the value is " + sum);
 
         Put put = new Put(key.get());
         put.addColumn(CF, COUNT, Bytes.toBytes(sum));

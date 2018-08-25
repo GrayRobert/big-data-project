@@ -31,18 +31,23 @@ public class CopyDataToSqlLiteDb {
 
                 for (Cell cell : res.listCells()) {
                     String row = new String(CellUtil.cloneRow(cell));
-                    String family = new String(CellUtil.cloneFamily(cell));
-                    String column = new String(CellUtil.cloneQualifier(cell));
+
+                    String key[] = row.split(":");
+                    String year = key[0];
+                    String genre = key[1];
+                    String word = key[2];
+
                     Integer value = Bytes.toInt(CellUtil.cloneValue(cell));
                     ++id;
-                    System.out.println("Inserting data for: " + id + " " + row + " " + value);
+                    //System.out.println("Inserting data for: " + id + " " + genre + " " + "year" + " " + word + " " + value);
                     try {
-                        SqlLiteHelper.insertData(id,row,value);
+                        SqlLiteHelper.insertData(id,genre,year,word,value);
                     } catch (SQLException e) {
-                        System.out.println("Could not insert data for: " + id + " " + row + " " + value);
+                        System.out.println("Could not insert data for: " + id + " " + genre + " " + "year" + " " + word + " " + value);
                         e.printStackTrace();
                     }
                 }
+                System.out.println("Finished inserting data into SQLLite Database");
             }
         } finally {
             connection.close();

@@ -3,6 +3,9 @@ package com.dbs.utils.hbase;
 import com.dbs.Constants;
 import com.dbs.utils.hdfs.HDFSFileIO;
 import com.dbs.utils.hdfs.ReadCSVFileFromHDFS;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.hbase.HBaseConfiguration;
@@ -15,6 +18,8 @@ import org.apache.hadoop.hbase.mapreduce.ImportTsv;
 import org.apache.hadoop.hbase.util.Bytes;
 
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,8 +30,10 @@ public class AddDataToSongDataTable {
     private static byte[] META_CF = Bytes.toBytes("meta");
     private static byte[] SONG_CF = Bytes.toBytes("song");
 
-    private static byte[] ARTIST_COLUMN = Bytes.toBytes("artist");
-    private static byte[] SONG_TITLE_COLUMN = Bytes.toBytes("song");
+    private static byte[] META_TITLE_COLUMN = Bytes.toBytes("title");
+    private static byte[] META_YEAR_COLUMN = Bytes.toBytes("year");
+    private static byte[] META_ARTIST_COLUMN = Bytes.toBytes("artist");
+    private static byte[] META_GENRE_COLUMN = Bytes.toBytes("genre");
     private static byte[] SONG_LYRICS_COLUMN = Bytes.toBytes("lyrics");
 
 
@@ -42,26 +49,29 @@ public class AddDataToSongDataTable {
 
             String data = ReadCSVFileFromHDFS.run();
 
-            List<String> dataRows = Arrays.asList(data.split("(?<=\")\\n(?=\")"));
+            try (
+                    Reader reader = new StringReader(data);
+                    CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT);
+            ) {
+                for (CSVRecord csvRecord : csvParser) {
+                    Put record = new Put(Bytes.toBytes(csvRecord.get(0)));
 
+                    String title = csvRecord.get(1);
+                    String year = csvRecord.get(2);
+                    String artist = csvRecord.get(3);
+                    String genre = csvRecord.get(4);
+                    String lyrics = csvRecord.get(5);
 
-            for (int i = 1; i < dataRows.size(); i++) {
-                String row = dataRows.get(i);
-                Put record = new Put(Bytes.toBytes(i));
+                    record.addColumn(META_CF, META_TITLE_COLUMN, Bytes.toBytes(title));
+                    record.addColumn(META_CF, META_YEAR_COLUMN, Bytes.toBytes(year));
+                    record.addColumn(META_CF, META_ARTIST_COLUMN, Bytes.toBytes(artist));
+                    record.addColumn(META_CF, META_GENRE_COLUMN, Bytes.toBytes(genre));
+                    record.addColumn(SONG_CF, SONG_LYRICS_COLUMN, Bytes.toBytes(lyrics));
 
-                List<String> dataColumns = Arrays.asList(row.split("(?<=\"),(?=\")"));
+                    table.put(record);
 
-                String artist = dataColumns.get(0).replace("\"", "");
-                String song = dataColumns.get(1).replace("\"", "");
-                String lyrics = dataColumns.get(3).replace("\"", "");
-
-                record.addColumn(META_CF, ARTIST_COLUMN, Bytes.toBytes(artist));
-                record.addColumn(META_CF, SONG_TITLE_COLUMN, Bytes.toBytes(song));
-                record.addColumn(SONG_CF, SONG_LYRICS_COLUMN, Bytes.toBytes(lyrics));
-
-                table.put(record);
-
-                System.out.println(i + ": Inserted song " + song + " by artist " + artist);
+                    System.out.println(csvRecord.get(0) + ": Inserted song " + title + " by artist " + artist);
+                }
             }
             System.out.println("Finished adding data");
         } finally {

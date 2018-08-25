@@ -12,6 +12,8 @@ public class SqlLiteHelper {
 
         String createTable = "CREATE TABLE IF NOT EXISTS summary_word_counts (\n"
                 + "	id integer PRIMARY KEY,\n"
+                + "	genre text,\n"
+                + "	year text,\n"
                 + "	word text NOT NULL,\n"
                 + "	count integer NOT NULL\n"
                 + ");";
@@ -53,16 +55,18 @@ public class SqlLiteHelper {
 
     }
 
-    public static void insertData(Integer id, String word, Integer count) throws SQLException {
+    public static void insertData(Integer id, String genre, String year, String word, Integer count) throws SQLException {
 
-        String sql = "INSERT INTO summary_word_counts(id,word,count) VALUES(?,?,?)";
+        String sql = "INSERT INTO summary_word_counts(id,genre,year,word,count) VALUES(?,?,?,?,?)";
 
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, id);
-                pstmt.setString(2, word);
-                pstmt.setInt(3, count);
+                pstmt.setString(2, genre);
+                pstmt.setString(3, year);
+                pstmt.setString(4, word);
+                pstmt.setInt(5, count);
                 pstmt.executeUpdate();
                 conn.close();
             }

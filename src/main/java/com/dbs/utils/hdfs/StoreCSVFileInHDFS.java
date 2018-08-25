@@ -38,7 +38,7 @@ public class StoreCSVFileInHDFS {
 
         try {
             System.out.println("Adding file to hdfs: " + Constants.CSV_FILE);
-            hdfs.deleteFile("/bigdataproject/data/songdata.csv",conf);
+            hdfs.deleteFile(Constants.TEMP_CSV_FILE,conf);
             hdfs.addFile(Constants.CSV_FILE, Constants.TEMP_DATA_DIRECTORY,conf);
         } catch (Exception e) {
             System.out.println("Could not add file to hdfs: Error");
