@@ -8,13 +8,20 @@ public class SqlLiteHelper {
 
     private static String url = "jdbc:sqlite:" + Constants.SQL_LITE_DATABASE;
 
-    public static void createNewDatabase() throws SQLException {
+    public static void createTables() throws SQLException {
 
-        String createTable = "CREATE TABLE IF NOT EXISTS summary_word_counts (\n"
+        String createSummaryTable = "CREATE TABLE IF NOT EXISTS summary_word_counts (\n"
                 + "	id integer PRIMARY KEY,\n"
                 + "	genre text,\n"
                 + "	year text,\n"
                 + "	word text NOT NULL,\n"
+                + "	count integer NOT NULL\n"
+                + ");";
+
+        String createProfanityTable = "CREATE TABLE IF NOT EXISTS profanity_summary (\n"
+                + "	id integer PRIMARY KEY,\n"
+                + "	genre text,\n"
+                + "	year text,\n"
                 + "	count integer NOT NULL\n"
                 + ");";
 
@@ -24,8 +31,11 @@ public class SqlLiteHelper {
                 System.out.println("The driver name is " + meta.getDriverName());
                 System.out.println("A new database has been created.");
                 Statement stmt = conn.createStatement();
-                stmt.execute(createTable);
+                stmt.execute(createSummaryTable);
                 System.out.println("Created summary_word_counts_table");
+                stmt.execute(createProfanityTable);
+                System.out.println("Created profanity_summary_table");
+
                 conn.close();
             }
 
@@ -36,15 +46,15 @@ public class SqlLiteHelper {
 
     }
 
-    public static void dropTable() throws SQLException {
+    public static void dropTables() throws SQLException {
 
-        String dropTable = "DROP TABLE IF EXISTS summary_word_counts;";
+        String dropTable = "DROP TABLE IF EXISTS summary_word_counts;DROP TABLE IF EXISTS profanity_summary;";
 
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 Statement stmt = conn.createStatement();
                 stmt.execute(dropTable);
-                System.out.println("Deleted summary_word_counts_table");
+                System.out.println("Dropped summary_word_counts and profanity_summary tables");
                 conn.close();
             }
 
@@ -67,6 +77,27 @@ public class SqlLiteHelper {
                 pstmt.setString(3, year);
                 pstmt.setString(4, word);
                 pstmt.setInt(5, count);
+                pstmt.executeUpdate();
+                conn.close();
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    public static void insertProfanityData(Integer id, String genre, String year, Integer count) throws SQLException {
+
+        String sql = "INSERT INTO profanity_summary(id,genre,year,count) VALUES(?,?,?,?)";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, id);
+                pstmt.setString(2, genre);
+                pstmt.setString(3, year);
+                pstmt.setInt(4, count);
                 pstmt.executeUpdate();
                 conn.close();
             }

@@ -7,6 +7,9 @@ import org.apache.hadoop.io.IntWritable;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +22,10 @@ public class LyricsMapper extends TableMapper<ImmutableBytesWritable, IntWritabl
     public static final byte[] COL_META_GENRE = "genre".getBytes();
     public static final byte[] COL_SONG_LYRICS = "lyrics".getBytes();
 
+    // A couple of words to ignore because they skew the results and the 3 letter rule won't catch them.
+    List<String> ignoreList = Arrays.asList("THIS","THAT","THEY","YOUR","CHORUS","VERSE","MUSIC","INSTRUMENTAL","LYRICS","FROM",
+                                            "WHEN","WITH","WHAT","WHERE","HAVE","HERE","WILL");
+
     public void map(ImmutableBytesWritable row, Result value, Context context)
             throws IOException, InterruptedException {
         String lyrics = Bytes.toString(value.getValue(CF_SONG,COL_SONG_LYRICS));
@@ -30,6 +37,12 @@ public class LyricsMapper extends TableMapper<ImmutableBytesWritable, IntWritabl
         while (matcher.find()) {
 
             String word = matcher.group().toUpperCase().trim();
+
+            //Skip list of uninteresting words
+            //if (ignoreList.contains(word) || word.length() <= 3){
+            //    System.out.println("Skipped word " + word + " length:" + word.length());
+            //    break;
+            //}
 
             String key = year + ":" + genre + ":" + word;
 

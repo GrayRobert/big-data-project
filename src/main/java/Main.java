@@ -1,6 +1,8 @@
+import com.dbs.utils.ProfanityChecker;
 import com.dbs.utils.SqlLiteHelper;
 import com.dbs.utils.hbase.*;
 import com.dbs.utils.hdfs.StoreCSVFileInHDFS;
+import com.dbs.utils.mapreduce.MapReduceProfanityDriver;
 import com.dbs.utils.mapreduce.MapReduceSongDataJob;
 
 public class Main {
@@ -12,10 +14,14 @@ public class Main {
         CreateSongDataTable.run();
         DeleteSongDataSummaryTable.run();
         CreateSongDataSummaryTable.run();
+        DeleteProfanitySummaryTable.run();
+        CreateProfanitySummaryTable.run();
         AddDataToSongDataTable.run();
-        SqlLiteHelper.dropTable();
-        SqlLiteHelper.createNewDatabase();
+        SqlLiteHelper.dropTables();
+        SqlLiteHelper.createTables();
         MapReduceSongDataJob.run();
-        CopyDataToSqlLiteDb.run();
+        MapReduceProfanityDriver.run();
+        CopySummaryDataToSqlLiteDb.run();
+        CopyProfanityDataToSqlLiteDb.run();
     }
 }

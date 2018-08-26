@@ -42,6 +42,7 @@ public class AddDataToSongDataTable {
         Connection connection = ConnectionFactory.createConnection(conf);
 
         Table table = null;
+        System.out.println("Start adding data to HBase");
         try {
             table = connection.getTable(TableName.valueOf(Constants.HBASE_TABLE_NAME));
 

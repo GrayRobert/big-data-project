@@ -10,6 +10,7 @@ public class Constants {
 
     //CSV file
     public static final String CSV_FILE = "/Users/robertgray/sandbox/big-data-project/src/main/resources/temp/data/lyrics.csv";
+    public static final String PROFANITY_CSV_FILE = "/Users/robertgray/sandbox/big-data-project/src/main/resources/temp/data/profanity.csv";
 
     //Temp directory for store data in HDFS
     public static final String TEMP_DATA_DIRECTORY = "/bigdataproject/data";
@@ -23,6 +24,7 @@ public class Constants {
 
     public static final String HBASE_TABLE_NAME = "songdata";
     public static final String HBASE_SUMMARY_TABLE_NAME = "songdata_summary";
+    public static final String HBASE_PROFANITY_SUMMARY_TABLE_NAME = "profanity_summary";
 
     //SQL Lite Setings
     public static final String SQL_LITE_DATABASE = "/Users/robertgray/sandbox/big-data-project/src/main/resources/temp/data/summary.db";
