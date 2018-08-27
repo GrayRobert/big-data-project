@@ -39,16 +39,16 @@ public class ProfanityMapper extends TableMapper<ImmutableBytesWritable, IntWrit
 
             // Skip word if it's not profanity
             if(!profanityChecker.checkWord(word)) {
-                System.out.println("Skipping word that is not profanity: " + word);
+                //System.out.println("Skipping word that is not profanity: " + word);
                 continue;
             } else {
-                System.out.println("Mapping word identified as profanity: " + word);
+                //System.out.println("Mapping word identified as profanity: " + word);
                 String key = genre + ":" + year;
                 ImmutableBytesWritable outputKey = new ImmutableBytesWritable();
                 outputKey.set(key.getBytes());
                 IntWritable outputValue = new IntWritable(1);
                 context.write(outputKey, outputValue);
-                System.out.println(Bytes.toString(outputKey.get()) + " " + outputValue.get());
+                //System.out.println(Bytes.toString(outputKey.get()) + " " + outputValue.get());
             }
         }
     }

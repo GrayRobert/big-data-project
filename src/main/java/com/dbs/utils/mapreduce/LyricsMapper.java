@@ -39,10 +39,10 @@ public class LyricsMapper extends TableMapper<ImmutableBytesWritable, IntWritabl
             String word = matcher.group().toUpperCase().trim();
 
             //Skip list of uninteresting words
-            //if (ignoreList.contains(word) || word.length() <= 3){
-            //    System.out.println("Skipped word " + word + " length:" + word.length());
-            //    break;
-            //}
+            if (ignoreList.contains(word) || word.length() <= 3){
+                //System.out.println("Skipped word " + word + " length:" + word.length());
+                continue;
+            }
 
             String key = year + ":" + genre + ":" + word;
 
@@ -51,7 +51,7 @@ public class LyricsMapper extends TableMapper<ImmutableBytesWritable, IntWritabl
             outputKey.set(key.getBytes());
             IntWritable outputValue = new IntWritable(1);
             context.write(outputKey, outputValue);
-            System.out.println(Bytes.toString(outputKey.get()) + " " + outputValue.get());
+            //System.out.println(Bytes.toString(outputKey.get()) + " " + outputValue.get());
         }
     }
 }

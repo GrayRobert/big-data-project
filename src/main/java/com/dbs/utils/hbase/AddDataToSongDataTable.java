@@ -71,7 +71,7 @@ public class AddDataToSongDataTable {
 
                     table.put(record);
 
-                    System.out.println(csvRecord.get(0) + ": Inserted song " + title + " by artist " + artist);
+                    //System.out.println(csvRecord.get(0) + ": Inserted song " + title + " by artist " + artist);
                 }
             }
             System.out.println("Finished adding data");

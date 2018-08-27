@@ -17,9 +17,9 @@ Note: Main.java executes each of the jobs and is a good starting point when revi
 
 ### Presuming hadoop and hbase are setup correctly the job does the following tasks
 
-1. Stores songdata.csv file in hdfs
+1. Stores lyrics.csv file in hdfs
 2. Creates table to store songdata in hbase
 3. Imports data into hbase table
-4. Creates table to store summarised data in hbase
-5. Runs MapReduce on source data producing a summary count of words used in the 51,000 song lyrics and stores the summary data in a hbase table
-6. Copys the summary table data to a more suitable SQL Lite database for further processing and analysis
+4. Creates tables to store summarised data in hbase
+5. Runs MapReducers on source data producing a summary data for the 360,000+ song lyrics and stores the summary data in a hbase tables
+6. Copys the hbase summary tables to a more suitable SQL Lite database for further processing and analysis

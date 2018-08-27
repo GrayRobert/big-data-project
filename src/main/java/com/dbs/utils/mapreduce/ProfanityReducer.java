@@ -28,7 +28,7 @@ public class ProfanityReducer extends
             }
         }
 
-        System.out.println("The key is " + keyString + " and the value is " + sum);
+        //System.out.println("The key is " + keyString + " and the value is " + sum);
 
         Put put = new Put(key.get());
         put.addColumn(CF, COL, Bytes.toBytes(sum));

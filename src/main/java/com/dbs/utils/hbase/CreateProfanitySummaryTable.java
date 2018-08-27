@@ -29,7 +29,7 @@ public class CreateProfanitySummaryTable {
                 tableName.addFamily(new HColumnDescriptor("profanity"));
 
                 if (!admin.tableExists(tableName.getTableName())) {
-                    System.out.print("Creating the " + Constants.HBASE_TABLE_NAME + " table. ");
+                    //System.out.print("Creating the " + Constants.HBASE_TABLE_NAME + " table. ");
 
                     admin.createTable(tableName);
 

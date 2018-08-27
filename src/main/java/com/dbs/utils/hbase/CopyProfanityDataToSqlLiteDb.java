@@ -33,12 +33,12 @@ public class CopyProfanityDataToSqlLiteDb {
                     String row = new String(CellUtil.cloneRow(cell));
 
                     String key[] = row.split(":");
-                    String year = key[0];
-                    String genre = key[1];
+                    String genre = key[0];
+                    String year = key[1];
 
                     Integer value = Bytes.toInt(CellUtil.cloneValue(cell));
                     ++id;
-                    System.out.println("Inserting data for: " + id + " " + genre + " " + year + " " + value);
+                    //System.out.println("Inserting data for: " + id + " " + genre + " " + year + " " + value);
                     try {
                         SqlLiteHelper.insertProfanityData(id,genre,year,value);
                     } catch (SQLException e) {

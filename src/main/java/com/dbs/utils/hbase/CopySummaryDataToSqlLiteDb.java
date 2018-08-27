@@ -39,7 +39,7 @@ public class CopySummaryDataToSqlLiteDb {
 
                     Integer value = Bytes.toInt(CellUtil.cloneValue(cell));
                     ++id;
-                    System.out.println("Inserting data for: " + id + " " + genre + " " + year + " " + word + " " + value);
+                    //System.out.println("Inserting data for: " + id + " " + genre + " " + year + " " + word + " " + value);
                     try {
                         SqlLiteHelper.insertData(id,genre,year,word,value);
                     } catch (SQLException e) {
